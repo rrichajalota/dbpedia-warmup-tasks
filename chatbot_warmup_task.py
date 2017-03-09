@@ -52,9 +52,9 @@ if __name__ == "__main__":
     welcome()
 
     while(1):
-        query = raw_input("Enter your query (press 0 to exit): ") 
+        query = raw_input("Enter your query (press e to exit): ") 
 
-        if query == '0':
+        if query == 'e' or query == 'E':
             break
 
         arabic_num = extract_numbers(query)
