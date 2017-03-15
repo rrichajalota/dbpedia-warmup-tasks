@@ -4,7 +4,7 @@ import time
 import urllib
 import io
 from dbHelper import DBHelper
-from secrets import bot_token, APP_NAME, appid
+from secrets import bot_token, appid
 
 db = DBHelper() 
 URL = "https://api.telegram.org/bot{}/".format(bot_token)
@@ -53,10 +53,10 @@ def query_wolframalpha(updates):
             chat = update["message"]["chat"]["id"]
 
             if text == "/start":
-                send_message("Hi! I'm a simple Question-Answering bot. Send /commands to check which commands I accept!", chat)
+                send_message("Hi! I'm a simple Question-Answering bot. Send /commands to check which commands I accept or just ask me anything you want to!", chat)
 
             elif text == "/commands":
-                send_message("/history - to see your search queries", chat)
+                send_message("Type: \n /history - to see your search queries", chat)
             
             elif text == "/history":
                 searches = db.user_query(chat)
@@ -77,7 +77,7 @@ def query_wolframalpha(updates):
                 url = SHORT_ANS_URL + "&i={}".format(text)
                 send_message(get_url(url), chat) 
                 send_message("Let me search for a descriptive one..", chat)
-                url = SIMPLE_ANS_URL + "&input={}&layout=labelbar&fontsize=22".format(text)
+                url = SIMPLE_ANS_URL + "&input={}&layout=labelbar&fontsize=24".format(text)
                 sendImage(url, chat)
 
         except KeyError:
