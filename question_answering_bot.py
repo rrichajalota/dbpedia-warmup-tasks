@@ -2,7 +2,6 @@ import json
 import requests
 import time
 import urllib
-import wolframalpha
 import io
 from dbHelper import DBHelper
 from secrets import bot_token, APP_NAME, appid
@@ -42,13 +41,10 @@ def query_wolframalpha(updates):
             chat = update["message"]["chat"]["id"]
 
             if text == "/start":
-                print "this"
                 send_message("Hi! I'm a simple Question-Answering bot. Send /commands to check which commands I accept!", chat)
-                print "end"
 
             elif text == "/commands":
-                send_message("Send '/history' to see your search queries!", chat)
-                print "yes"
+                send_message("/history - to see your search queries", chat)
             
             elif text == "/history":
                 searches = db.user_query(chat)
