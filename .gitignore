@@ -1,0 +1,4 @@
+#ignore the following
+*.pyc
+*.sqlite
+secrets.py
