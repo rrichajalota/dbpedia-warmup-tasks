@@ -13,18 +13,27 @@ SHORT_ANS_URL = WOLF_URL + "result?appid={}".format(appid)
 SIMPLE_ANS_URL = WOLF_URL + "simple?appid={}".format(appid)
 
 def get_url(url):
+    """
+    sends a GET request to the telegram API
+    """
     response = requests.get(url)
     content = response.content.decode("utf8")
     return content
 
 
 def get_json_from_url(url):
+    """
+    converts the response from the telegram API into json format
+    """
     content = get_url(url)
     js = json.loads(content)
     return js
 
 
 def get_updates(offset=None):
+    """
+    receives recent updates from the telegram bot
+    """
     url = URL + "getUpdates?timeout=100"
     if offset:
         url += "&offset={}".format(offset)
@@ -33,6 +42,9 @@ def get_updates(offset=None):
 
 
 def query_wolframalpha(updates):
+    """
+    sends the search query to the wolframalpha api and receives the response from it
+    """
     
     for update in updates["result"]:
         
@@ -73,6 +85,9 @@ def query_wolframalpha(updates):
 
 #used when simple_api of wolframalpha is accessed
 def sendImage(result_url, chat_id):
+    """
+    sends Images to the telegram bot which are a part of the descriptive response from the wolframalpha api
+    """
     response = requests.get(result_url)
     photo = io.BytesIO(response.content)
     photo.name = 'img.png'
@@ -86,6 +101,9 @@ def sendImage(result_url, chat_id):
 
 
 def get_last_update_id(updates):
+    """
+    returns the last update_id received from the telegram api to set the offset value for the next update
+    """
     update_ids = []
     for update in updates["result"]:
         update_ids.append(int(update["update_id"]))
@@ -93,12 +111,18 @@ def get_last_update_id(updates):
 
 #builds a custom keyboard
 def build_keyboard(items):
+    """
+    returns a custom keyboard
+    """
     keyboard = [[item] for item in items]
     reply_markup = {"keyboard" : keyboard, "one_time_keyboard": True}
     return json.dumps(reply_markup)
 
 
 def send_message(text, chat_id, reply_markup= None, encode=True):
+    """
+    sends a message from the telegram bot to the user
+    """
     try:
         if encode == True:
             text = urllib.quote(text.encode('UTF-8'))
@@ -113,7 +137,7 @@ def send_message(text, chat_id, reply_markup= None, encode=True):
 
 
 def main():
-    db.setup()
+    db.setup()  
     last_update_id = None
     while True:
         updates = get_updates(last_update_id)
