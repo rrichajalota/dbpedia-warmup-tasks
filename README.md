@@ -3,7 +3,7 @@
 * [Arabic number to Roman number Chatbot](#arabic-number-to-roman-number-chatbot) 
 * [Access QA system via API](#access-qa-system-via-api)
 
-###Arabic number to Roman number Chatbot
+### Arabic number to Roman number Chatbot
 Run the script as: python chatbot_warmup_task.py 
 
 #### Example Snippet
@@ -26,7 +26,7 @@ The bot accepts a query from the user. It extracts numbers from the query and co
 
 ***
 
-###Access QA system via API
+### Access QA system via API
 **About:** This is a telegram bot which accesses the QA system of WolframAlpha. <br>
 To run this bot, a telegram account would be required. Make a new bot by sending the message "/newbot" to @BotFather on telegram. Store the token received in a secrets.py file (in the same directory where question_answering_bot.py is stored). This token will be used to access the Telegram Bot API.  
 
