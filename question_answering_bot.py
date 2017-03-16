@@ -53,17 +53,17 @@ def query_wolframalpha(updates):
             chat = update["message"]["chat"]["id"]
 
             if text == "/start":
-                send_message("Hi! I'm a simple Question-Answering bot. Send /commands to check which commands I accept or just ask me anything you want to!", chat)
+                send_message("Hi! I'm a simple Question-Answering bot. Ask me anything you want to or type /commands to check which commands I accept!", chat)
 
             elif text == "/commands":
-                send_message("Type: \n /history - to see your search queries", chat)
+                send_message("Type: \n /history - to see your search queries \n /bothistory - to see what others searched for", chat)
             
             elif text == "/history":
                 searches = db.user_query(chat)
                 keyboard = build_keyboard(searches)
-                send_message("You can also select from your past queries!Feel free to ask again!! :)", chat, keyboard)
+                send_message("You can also select from your past queries! \n Feel free to ask again!! :)", chat, keyboard)
 
-            elif text == "/bot_history":
+            elif text == "/bothistory":
                 searches = db.all_query()
                 keyboard = build_keyboard(searches)
                 send_message("These are the queries asked by others!", chat, keyboard)
