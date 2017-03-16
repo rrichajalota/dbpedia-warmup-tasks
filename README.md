@@ -41,11 +41,12 @@ Finally, run the script as: python question_answering_bot.py from the terminal.
 #### Example Snippet
 Start the conversation with the bot by typing: <br>
 q: `/start` <br>
->> Hi! I'm a simple Question-Answering bot. Send /commands to check which commands I accept or just ask me anything you want to!
+>>Hi! I'm a simple Question-Answering bot. Ask me anything you want to or type /commands to check which commands I accept!
 
 q: `/commands` <br>
 >> Type: <br>
- /history - to see your search queries
+ /history - to see your search queries <br>
+ /bothistory - to see what others searched for
  
 q: What is Brexit?
 >> Looking for a short answer.. <br>
