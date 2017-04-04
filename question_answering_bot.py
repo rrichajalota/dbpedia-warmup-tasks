@@ -21,7 +21,7 @@ def get_url(url):
     return content
 
 
-def get_json_from_url(url):
+def get_json(url):
     """
     converts the response from the telegram API into json format
     """
@@ -34,10 +34,10 @@ def get_updates(offset=None):
     """
     receives recent updates from the telegram bot
     """
-    url = URL + "getUpdates?timeout=100"
+    url = URL + "getUpdates?timeout=120"
     if offset:
         url += "&offset={}".format(offset)
-    js = get_json_from_url(url)
+    js = get_json(url)
     return js
 
 
@@ -110,11 +110,11 @@ def get_last_update_id(updates):
     return max(update_ids)
 
 #builds a custom keyboard
-def build_keyboard(items):
+def build_keyboard(queries):
     """
     returns a custom keyboard
     """
-    keyboard = [[item] for item in items]
+    keyboard = [[query] for query in queries]
     reply_markup = {"keyboard" : keyboard, "one_time_keyboard": True}
     return json.dumps(reply_markup)
 
