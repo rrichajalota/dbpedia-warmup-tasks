@@ -80,7 +80,9 @@ def inline_queries(updates):
                     sysrandom = random.SystemRandom()
                     q_id = hex(sysrandom.getrandbits(64))
 
-                    InlineQueryResultArticle = {"type": "article", "id": q_id, "title": "response from wolframalpha", "input_message_content":message}
+                    #InlineKeyboardMarkup = InlineKeyboard()
+
+                    InlineQueryResultArticle = {"type": "article", "id": q_id, "title": "response from wolframalpha", "input_message_content":message}#, "reply_markup": InlineKeyboardMarkup}
                     results = []
                     results.append(InlineQueryResultArticle)
 
