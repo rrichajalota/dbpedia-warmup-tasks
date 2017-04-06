@@ -54,6 +54,6 @@ q: What is Brexit?
  Let me search for a descriptive one.. <br>
  ![Image of Query Response](https://github.com/rrichajalota/dbpedia_warmup_tasks/blob/master/brexit.jpg)
 
->> <b> The bot supports inline queries as well, which means from any other chat we can call the bot with its username and ask   our query. </b> Eg. @QuesAns_bot President <br>
+<b> The bot supports inline queries as well, which means from any other chat we can call the bot with its username and ask   our query. </b> Eg. @QuesAns_bot President <br>
   Snippet of Inline Query: <br>
  ![Image of Inline Query](https://github.com/rrichajalota/dbpedia-warmup-tasks/blob/master/inlineQuery.png)
