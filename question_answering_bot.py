@@ -88,6 +88,8 @@ def inline_queries(updates):
                         'inline_query_id': queryId,
                         'results' : json.dumps(results),
                         #'cache_time': 3000,
+                        'switch_pm_text': "For elaborative queries, switch to chat space",
+                        'switch_pm_parameter': 'start',
                     }
 
                     print params
