@@ -3,6 +3,7 @@ import requests
 import time
 import urllib
 import io
+import random
 from dbHelper import DBHelper
 from secrets import bot_token, appid
 
@@ -39,6 +40,85 @@ def get_updates(offset=None):
         url += "&offset={}".format(offset)
     js = get_json(url)
     return js
+
+def update_qID(q_id):
+    curr_id = int(q_id)
+    next_id = curr_id + 1
+    return str(next_id)
+
+def inline_queries(updates):
+    try:
+        for update in updates["result"]:
+            print update
+            #print update["message"]
+            #print update["inline_query"]
+            if "message" in update:
+                #print "message in keys"
+                query_wolframalpha(updates)
+            elif "inline_query" in update:
+                #print "I am inline!"
+                inline_query = update["inline_query"]
+                #queryId = update_qID(inline_query["id"])
+                queryId = inline_query["id"].decode('utf8')
+                print queryId
+                querytext = inline_query["query"]
+                print querytext
+
+                if inline_query["query"] and querytext != "":
+                    print "text is here"
+                    url = SHORT_ANS_URL + "&i={}".format(querytext)
+                    print url
+                    response_from_api = get_url(url) #query the API
+                    print response_from_api
+                    message = {"message_text": response_from_api, "parse_mode": "Markdown", "disable_web_page_preview": True}
+                    sysrandom = random.SystemRandom()
+                    q_id = hex(sysrandom.getrandbits(64))
+                    InlineQueryResultArticle = {"type": "article", "id": q_id, "title": "response from wolframalpha", "input_message_content":message}
+                    results = []
+                    results.append(InlineQueryResultArticle)
+                    #results.append({"InlineQueryResultArticle": InlineQueryResultArticle})
+                    #results = json.dumps(results)
+
+                    params = {
+                        'inline_query_id': queryId,
+                        'results' : json.dumps(results),
+                        #'cache_time': 3000,
+                    }
+                    print params
+                    print "------------------------------"
+                    reply_at_url = URL + "answerInlineQuery"       #?inline_query_id={}&results={}".format(queryId, results)
+                    #get_url(reply_at_url) 
+                    print requests.post(reply_at_url, params= params)
+
+                elif inline_query["query"] and querytext == "":
+                    print "hey"
+                    response = "Hi! I am a Question-Answering bot! Ask me anything!"
+                    message = {"message_text": response, "parse_mode": "Markdown", "disable_web_page_preview": True}
+                    sysrandom = random.SystemRandom()
+                    q_id = hex(sysrandom.getrandbits(64))
+                    InlineQueryResultArticle = {"type": "article", "id": q_id, "title": "Bot Intro", "input_message_content":message}
+                    results = []
+                    results.append(InlineQueryResultArticle)
+                    #results.append({"InlineQueryResultArticle": InlineQueryResultArticle})
+                    #results = json.dumps(results)
+                    #reply_at_url = URL + "answerInlineQuery?inline_query_id={}&results={}".format(queryId, results)
+                    #get_url(reply_at_url)
+                    params = {
+                        'inline_query_id': queryId,
+                        'results' : json.dumps(results),
+                        #'cache_time': 3000,
+                    }
+                    print params
+                    print "-----------------------------------"
+                    reply_at_url = URL + "answerInlineQuery"       #?inline_query_id={}&results={}".format(queryId, results)
+                    #get_url(reply_at_url) 
+                    print requests.post(reply_at_url, params= params)
+
+
+            else:
+                pass
+    except KeyError:
+        pass
 
 
 def query_wolframalpha(updates):
@@ -143,7 +223,8 @@ def main():
         updates = get_updates(last_update_id)
         if len(updates["result"]) > 0:
             last_update_id = get_last_update_id(updates) + 1
-            query_wolframalpha(updates)
+            #query_wolframalpha(updates)
+            inline_queries(updates)
         time.sleep(0.5)
 
 
